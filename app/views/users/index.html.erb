@@ -1,0 +1,59 @@
+<style>
+	.friend_buttons.friended .friend {
+		visibility: hidden;
+	}
+	.friend_buttons.unfriended .unfriend {
+		visibility: hidden;
+	}
+</style>
+
+<h1>All Users</h1>
+
+<ul>
+	<% @users.each do |user| %>
+	<li>
+
+		<%= user.username %>
+		<% friend_status = (current_user.friends.include?(user)) ? "friended" : "unfriended" %>
+		<span class="friend_buttons <%= friend_status %>">
+			<%= button_to "Friend", user_friendship_url(user),
+				:remote => true,
+				class: "friend" %>
+			<%= button_to "Unfriend", user_friendship_url(user),
+				method: 'delete',
+				remote: :true,
+				class: "unfriend" %>
+		</span>
+
+	</li>
+	<% end %>
+</ul>
+
+<script>
+	$(function() {
+		// Friending...
+		// $('input').click(function() {
+		// 	$(this).attr('value', "Friending...");
+		// });
+
+		// Friended
+		$('form').on('ajax:success', function (event, data) {
+			var parent = $(this).parent();
+			$(parent).toggleClass('friended unfriended');
+
+			// $(this).parent.html("New contents");
+
+			// // Select this/form's submit button...
+			// var inputs = $(this).children('input'); // Now we have all inputs...
+			// // console.log(inputs);
+			// var hopefullySubmit = inputs.filter("[type='submit']");
+			// console.log(hopefullySubmit);
+			// hopefullySubmit.attr('value', "Friended");
+
+			// $().filter('type = submit')
+			// $(this).attr('value', "Friended");
+		})
+
+	});
+
+</script>

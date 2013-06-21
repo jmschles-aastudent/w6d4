@@ -5,9 +5,23 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+	<style>
+		.friend_buttons.friended .friend {
+			visible: false;
+		}
+		.friend_buttons.unfriended .unfriend {
+			visible: false;
+		}
+	</style>
 </head>
 
 <body>
+	<% if current_user %>
+		<p><%= current_user.username %></p>
+	<% end %>
+
+	<hr>
+
   <%= yield %>
 </body>
 </html>

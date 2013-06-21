@@ -4,6 +4,8 @@ gem 'rails', '3.2.11'
 
 gem 'bcrypt-ruby', :require => "bcrypt"
 gem 'sqlite3'
+gem 'better_errors'
+gem 'binding_of_caller'
 
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'

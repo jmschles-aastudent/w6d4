@@ -1,8 +1,14 @@
 module SessionsHelper
   def current_user
-    return nil if params[:session_token].nil?
-    
-    User.find_by_session_token(params[:session_token])
+    return nil if session[:session_token].nil?
+
+    User.find_by_session_token(session[:session_token])
+  end
+
+  def require_login
+    unless current_user
+      redirect_to new_session_url
+    end
   end
 
   def login_user(username, password)
@@ -13,8 +19,8 @@ module SessionsHelper
 
     u.session_token = SecureRandom::urlsafe_base64(32)
     u.save!
-    params[:session_token] = u.session_token
-    
+    session[:session_token] = u.session_token
+
     u
   end
 end
